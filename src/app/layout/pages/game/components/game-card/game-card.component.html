@@ -1,0 +1,18 @@
+@if (card()) {
+<div
+  [@.disabled]="!animated()"
+  @show
+  [@flip]="visible() ? 'visible' : 'hidden'"
+  class="select-none hover:shadow-xl transition"
+  [class.cursor-grab]="draggable()"
+>
+  <img
+    class="w-24 drop-shadow-lg"
+    [src]="
+      visible()
+        ? card()!.image
+        : 'https://deckofcardsapi.com/static/img/back.png'
+    "
+  />
+</div>
+}

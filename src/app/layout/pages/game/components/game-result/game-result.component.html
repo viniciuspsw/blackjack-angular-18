@@ -1,0 +1,29 @@
+@if (game(); as game) {
+<div
+  class="bg-white/60 z-10 backdrop-blur-md fixed top-0 left-0 w-full h-full flex-col gap-6 flex items-center justify-center"
+>
+  <div class="max-w-2xl w-full grid gap-8">
+    <h1 class="text-center block text-4xl font-bold">{{ title() }}</h1>
+
+    <app-game-hand
+      [player]="game.dealer"
+      [score]="scoreboard()?.[game.dealer.username] ?? 0"
+      [cards]="game.hands.get(game.dealer.username)"
+      [animated]="false"
+    >
+    </app-game-hand>
+
+    <app-game-hand
+      [player]="game.player"
+      [score]="scoreboard()?.[game.player.username] ?? 0"
+      [cards]="game.hands.get(game.player.username)"
+      [animated]="false"
+    >
+    </app-game-hand>
+
+    <app-button type="button" (click)="restart.emit()">
+      Jogar novamente
+    </app-button>
+  </div>
+</div>
+}

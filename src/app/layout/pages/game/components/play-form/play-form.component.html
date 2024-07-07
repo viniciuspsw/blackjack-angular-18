@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="h-full">
+  <app-layout [isLoading]="isLoading()">
+    <div class="flex items-center justify-center h-full">
+      <div class="grid gap-2 w-full">
+        <label
+          for="username"
+          class="text-lg text-primary font-medium tracking-wide block text-center"
+        >
+          Escolha um nome de usuário
+        </label>
+        <app-input
+          htmlId="username"
+          formControlName="username"
+          required
+        ></app-input>
+        @if(form.get('username')?.invalid && (form.get('username')?.dirty ||
+        form.get('username')?.touched)) {
+        @if(form.get('username')?.hasError('required')) {
+        <p class="font-semibold text-sm block text-primary">
+          Escolha seu nome de usuário
+        </p>
+        } @else if (form.get('username')?.hasError('minlength')) {
+        <p class="font-semibold text-sm block text-primary">
+          O nome de usuário deve ter no mínimo 3 caracteres
+        </p>
+        } @else if (form.get('username')?.hasError('maxlength')) {
+        <p class="font-semibold text-sm block text-primary">
+          O nome de usuário deve ter no máximo 20 caracteres
+        </p>
+        } @else if (form.get('username')?.hasError('invalidUsername')) {
+        <p class="font-semibold text-sm block text-primary">
+          O nome de usuário deve conter apenas letras e números, sem espaços,
+          pontuação ou caracteres especiais.
+        </p>
+        } }
+      </div>
+    </div>
+
+    <div ngProjectAs="footer">
+      <app-button type="submit" [disabled]="isLoading()">
+        {{ isLoading() ? "Preparando partida..." : "Jogar agora" }}
+      </app-button>
+    </div>
+  </app-layout>
+</form>

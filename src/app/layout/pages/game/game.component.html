@@ -1,0 +1,41 @@
+@if (game(); as game) {
+<app-layout [isLoading]="isLoading()">
+  <div class="flex flex-col gap-16 h-full">
+    <app-game-hand
+      [player]="game.dealer"
+      [score]="scoreboard()?.[game.dealer.username] ?? 0"
+      [cards]="game.hands.get(game.dealer.username)"
+    ></app-game-hand>
+
+    <app-game-hand
+      [player]="game.player"
+      [score]="scoreboard()?.[game.player.username] ?? 0"
+      [cards]="game.hands.get(game.player.username)"
+      [canDropCard]="true"
+      (dropCard)="dropCard($event)"
+    ></app-game-hand>
+  </div>
+
+  <div ngProjectAs="footer" class="grid grid-cols-[1fr,1fr,auto] gap-4">
+    <app-button type="button" [disabled]="!canDraw()" (click)="draw()">
+      Pedir carta
+    </app-button>
+    <app-button type="button" [disabled]="!canDraw()" (click)="stop()">
+      Parar
+    </app-button>
+    <app-button type="button" [disabled]="!canDraw()" (click)="restart()">
+      <span class="material-symbols-outlined">refresh</span>
+    </app-button>
+  </div>
+
+  @if (game.finishedAt) {
+  <app-game-result
+    [game]="game"
+    [scoreboard]="scoreboard()"
+    (restart)="restart()"
+  ></app-game-result>
+  }
+</app-layout>
+} @else {
+<app-play-form [isLoading]="isLoading()" (play)="play($event)"></app-play-form>
+}

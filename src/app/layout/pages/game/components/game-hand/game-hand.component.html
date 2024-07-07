@@ -1,0 +1,47 @@
+@if (player(); as player) {
+<div class="space-y-4" cdkDropListGroup>
+  <div class="flex items-center justify-between gap-2">
+    <h4 class="text-xl font-semibold text-primary/80">
+      {{ player.username }}
+    </h4>
+    <span>
+      Pontos: <strong>{{ score() }}</strong>
+    </span>
+  </div>
+
+  <div class="flex flex-wrap gap-2 min-h-36" cdkDropList>
+    @for (card of cards(); track $index) {
+    <app-game-card
+      cdkDrag
+      (cdkDragStarted)="onDragStart()"
+      (cdkDragEnded)="onDragEnd()"
+      [cdkDragData]="card.card"
+      [cdkDragDisabled]="!canDropCard()"
+      [card]="card.card"
+      [visible]="card.visible"
+      [draggable]="canDropCard() || false"
+      [animated]="animated()"
+    ></app-game-card>
+    }
+  </div>
+
+  @if (canDropCard()) {
+  <div
+    [class.invisible]="!isDragging()"
+    [class.shadow-xl]="isDroppingToDelete()"
+    [class.bg-opacity-100]="isDroppingToDelete()"
+    [class.text-white]="isDroppingToDelete()"
+    class="relative transition select-none p-4 rounded-md bg-primary bg-opacity-10 flex items-center justify-center w-full h-24 text-primary"
+  >
+    <span class="material-symbols-outlined">delete</span>
+    <div
+      class="w-full absolute top-0 left-0 h-full flex items-center justify-center"
+      cdkDropList
+      (cdkDropListDropped)="onDropIntoDeleteContainer($event)"
+      (cdkDropListEntered)="onEnterDeleteContainer()"
+      (cdkDropListExited)="onLeaveDeleteContainer()"
+    ></div>
+  </div>
+  }
+</div>
+}

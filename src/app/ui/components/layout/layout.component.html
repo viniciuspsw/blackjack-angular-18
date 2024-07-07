@@ -1,0 +1,22 @@
+<div
+  class="bg-surface h-full w-full grid grid-rows-[minmax(auto,70px),1fr,auto]"
+>
+  <header class="relative py-6 px-2 text-center w-full max-w-2xl m-auto">
+    <h1 class="text-xl font-bold text-primary">Blackjack</h1>
+    @if(isLoading()){
+    <div class="absolute right-0 top-5">
+      <app-loader></app-loader>
+    </div>
+    }
+  </header>
+  <div class="h-full">
+    <div class="max-w-2xl m-auto p-6 h-full">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <footer class="border-t p-6">
+    <div class="max-w-2xl m-auto">
+      <ng-content select="footer"></ng-content>
+    </div>
+  </footer>
+</div>
