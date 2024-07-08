@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { Card, Player } from '@/core/entities';
@@ -49,5 +49,12 @@ export class GameComponent {
 
   dropCard(payload: { card: Card; player: Player }): void {
     this.store.dispatch(fromActions.dropHandCard(payload));
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  onLeave(event: BeforeUnloadEvent): void {
+    const game = this.game();
+    if (!game || game.isFinished()) return;
+    event.preventDefault();
   }
 }

@@ -145,4 +145,8 @@ export class Game {
     this.#winner = player;
     this.#finishedAt = new Date();
   }
+
+  public isFinished(): boolean {
+    return !!this.#finishedAt;
+  }
 }
