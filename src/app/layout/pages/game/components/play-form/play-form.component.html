@@ -32,6 +32,10 @@
           O nome de usuário deve conter apenas letras e números, sem espaços,
           pontuação ou caracteres especiais.
         </p>
+        } @else if (form.get('username')?.hasError('unavailable')) {
+        <p class="font-semibold text-sm block text-primary">
+          Este nome de usuário está em uso.
+        </p>
         } }
       </div>
     </div>

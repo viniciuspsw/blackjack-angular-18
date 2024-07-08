@@ -15,6 +15,15 @@ const usernameValidator: ValidatorFn = (control: AbstractControl) => {
   return isValid ? null : { invalidUsername: true };
 };
 
+const availableUsernameValidator: ValidatorFn = (control: AbstractControl) => {
+  const value = control.value as string;
+  if (!value) return null;
+
+  const reservedUsernames = ['Dealer', 'dealer'];
+  const isValid = !reservedUsernames.includes(value);
+  return isValid ? null : { unavailable: true };
+};
+
 @Component({
   selector: 'app-play-form',
   templateUrl: './play-form.component.html',
@@ -30,6 +39,7 @@ export class PlayFormComponent {
       Validators.minLength(3),
       Validators.maxLength(20),
       usernameValidator,
+      availableUsernameValidator,
     ]),
   });
 
